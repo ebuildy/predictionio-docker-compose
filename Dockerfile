@@ -7,7 +7,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PIO_VERSION 0.11.0
+ENV PIO_VERSION 0.12.0
 ENV SPARK_VERSION 2.1.1
 ENV ELASTICSEARCH_VERSION 5.5.0
 
@@ -15,12 +15,12 @@ ENV PIO_HOME /opt/pio
 ENV PATH=${PIO_HOME}/bin:$PATH
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
-RUN cd /tmp && \
-	wget http://mirror.nexcess.net/apache/incubator/predictionio/${PIO_VERSION}-incubating/apache-predictionio-${PIO_VERSION}-incubating.tar.gz -O pio.tar.gz \
+RUN cd /tmp \
+    && wget http://apache.crihan.fr/dist/incubator/predictionio/${PIO_VERSION}-incubating/apache-predictionio-${PIO_VERSION}-incubating.tar.gz -O pio.tar.gz \
     && mkdir pio \
     && tar -xzf pio.tar.gz -C pio \
     && cd pio \
-	&& ./make-distribution.sh -Dscala.version=2.11.8 -Dspark.version=${SPARK_VERSION} -Delasticsearch.version=${ELASTICSEARCH_VERSION}
+    && ./make-distribution.sh -Dscala.version=2.11.8 -Dspark.version=${SPARK_VERSION} -Delasticsearch.version=${ELASTICSEARCH_VERSION}
 
 RUN mkdir ${PIO_HOME} && \
 	tar -zxf /tmp/pio/PredictionIO-${PIO_VERSION}-incubating.tar.gz --strip-components=1 -C ${PIO_HOME} && \
